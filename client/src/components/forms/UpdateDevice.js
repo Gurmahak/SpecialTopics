@@ -1,56 +1,70 @@
 import React from 'react'
+import { useMutation } from '@apollo/react-hooks'
+
 import Button from '@material-ui/core/Button'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
-import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
 
-const UpdateDevice = () => {
+import { UPDATE_DEVICE } from '../../queries'
+import { Select } from '@material-ui/core'
+
+const UpdateDevice = (props) => {
+  const { id, year, brand, model, price, category, onButtonClick, onInputChange } = props
+  const [updateDevice] = useMutation(UPDATE_DEVICE)
   return (
-    <form>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        updateDevice({
+          variables: {
+            id, year, brand, model, price, category
+          }
+        })
+        onButtonClick()
+      }}
+    >
       <TextField
         label='Year'
-        defaultValue='2019'
-        placeholder='i.e. 2019'
-        type='number'
+        defaultValue={year}
+        placeholder='Year'
+        onChange={e => onInputChange('year', e.target.value)}
         margin='normal'
         variant='outlined'
         style={{ display: 'flex', margin: '10px' }}
       />
       <TextField
-        label='brand'
-        defaultValue='Apple'
-        placeholder='i.e. Apple'
+        label='Brand'
+        defaultValue={brand}
+        placeholder='Brand'
+        onChange={e => onInputChange('brand', e.target.value)}
         margin='normal'
         variant='outlined'
         style={{ display: 'flex', margin: '10px' }}
       />
       <TextField
         label='Model'
-        defaultValue='iPhone'
-        placeholder='i.e. iPhone'
+        defaultValue={model}
+        placeholder='Model'
+        onChange={e => onInputChange('model', e.target.value)}
         margin='normal'
         variant='outlined'
         style={{ display: 'flex', margin: '10px' }}
       />
       <TextField
         label='Price'
-        defaultValue='1000'
-        placeholder='i.e. 5000'
-        type='number'
+        defaultValue={price}
+        placeholder='Price'
+        onChange={e => onInputChange('price', e.target.value)}
         margin='normal'
         variant='outlined'
         style={{ display: 'flex', margin: '10px' }}
       />
       <Select
-        native
-        value='some id'
-        input={
-          <OutlinedInput name='character' id="outlined-age-native-simple" />
-        }
-        style={{ display: 'flex', margin: '10px' }}
-      >
-        <option value='id'>John Smith</option>
-      </Select>
+      value={category}
+      label='character'
+      variant='outlined'
+      style={{ display: 'flex', margin: '10px' }}
+      />
+      
       <Button
         type='submit'
         variant='contained'
@@ -60,14 +74,14 @@ const UpdateDevice = () => {
         Update Device
       </Button>
       <Button
+        onClick={onButtonClick}
         variant='contained'
         color='secondary'
-        style={{ margin: '10px' }}
+        style={{ margin: '10px'}}
       >
         Cancel
       </Button>
     </form>
   )
 }
-
 export default UpdateDevice

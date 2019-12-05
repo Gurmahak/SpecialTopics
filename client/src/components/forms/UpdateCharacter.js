@@ -1,27 +1,46 @@
 import React from 'react'
+import { useMutation } from '@apollo/react-hooks'
 
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
-const UpdateCharacter = () => {
+import { UPDATE_CHARACTER } from '../../queries'
+
+const UpdateCharacter = (props) => {
+  const { id, firstName, lastName, onButtonClick, onInputChange } = props
+  const [updateCharacter] = useMutation(UPDATE_CHARACTER)
+
   return (
-    <form>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        updateCharacter({
+          variables: {
+            id, firstName, lastName
+          }
+        })
+        onButtonClick()
+      }}
+    >
       <TextField
-        label='First Name'
-        defaultValue='John'
-        placeholder='i.e. John'
+        label='FirstName'
+        defaultValue={firstName}
+        placeholder='FirstNAme'
+        onChange={e => onInputChange('firstName', e.target.value)}
         margin='normal'
-        varian='outlined'
+        variant='outlined'
         style={{ margin: '10px' }}
       />
       <TextField
-        label='Last Name'
-        defaultValue='Smith'
-        placeholder='i.e. Smith'
+        label='LastName'
+        defaultValue={lastName}
+        placeholder='LastName'
+        onChange={e => onInputChange('lastName', e.target.value)}
         margin='normal'
-        varian='outlined'
+        variant='outlined'
         style={{ margin: '10px' }}
       />
+      
       <Button
         type='submit'
         variant='contained'
@@ -31,9 +50,10 @@ const UpdateCharacter = () => {
         Update Character
       </Button>
       <Button
+        onClick={onButtonClick}
         variant='contained'
         color='secondary'
-        style={{ margin: '10px' }}
+        style={{ margin: '10px'}}
       >
         Cancel
       </Button>

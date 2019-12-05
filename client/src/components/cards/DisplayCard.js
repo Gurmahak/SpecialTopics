@@ -32,5 +32,4 @@ const DisplayCard = ({ children, style }) => {
     </Card>
   )
 }
-
 export default DisplayCard

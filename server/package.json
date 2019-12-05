@@ -1,7 +1,6 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "apollo server for final exam",
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node -e js",
@@ -10,8 +9,8 @@
   "author": "Paul Lam",
   "license": "MIT",
   "dependencies": {
-    "apollo-server": "^2.9.12",
-    "apollo-server-express": "^2.9.12",
+    "apollo-server": "^2.9.9",
+    "apollo-server-express": "^2.9.9",
     "express": "^4.17.1",
     "graphql": "^14.5.8",
     "lodash": "^4.17.15"

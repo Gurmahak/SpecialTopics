@@ -14,5 +14,4 @@ const Title = () => {
 
   return <h1 style={styles.title}>Disney Characters and Device with GraphQL</h1>
 }
-
 export default Title

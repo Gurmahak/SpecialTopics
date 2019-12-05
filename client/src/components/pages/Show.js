@@ -1,16 +1,15 @@
 import React, { Fragment } from 'react'
-import Currency from 'react-currency-formatter'
+import { Link, BrowserRouter } from 'react-router-dom'
 
-import Button from '@material-ui/core/Button'
 import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { makeStyles } from '@material-ui/core/styles'
-
-
 import DisplayCard from '../cards/DisplayCard'
 import '../../App'
+
 
 const useStyles = makeStyles({
   label: {
@@ -18,7 +17,10 @@ const useStyles = makeStyles({
   }
 })
 
-const Show = () => {
+const Show = (props) => {
+  const { id, firstName, lastName, year, brand, model, price } = props
+  const fullName = `${firstName} ${lastName} `
+  const fullDetail = `${year} ${brand} ${model}`
   const classes = useStyles()
 
   return (
@@ -27,15 +29,15 @@ const Show = () => {
         <Fragment>
           <ListItem>
             <ListItemText
-              primary='John Smith'
+              primary={fullName}
             />
           </ListItem>
           <ul>
             <DisplayCard>
               <ListItem>
                 <ListItemText
-                  primary='2019 Apple iPhone'
-                  secondary={<Currency quantity='5000' currency='CAD' />}
+                  primary={fullDetail}
+                  secondary={price}
                 />
               </ListItem>
             </DisplayCard>
@@ -43,7 +45,15 @@ const Show = () => {
         </Fragment>
         <CardActions>
           <Button color='primary' size='small' variant='outlined'>
+          <BrowserRouter>
+          <Link to={{
+              pathname: '/',
+              state: { character: id }
+            }}
+            >
             Go Back Home
+            </Link>
+            </BrowserRouter>
           </Button>
         </CardActions>
       </DisplayCard>
